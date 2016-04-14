@@ -1,0 +1,129 @@
+/* Tekst:  1. bez gotovih funkcija urediti Ivan Tomic , 1999 u
+1999, Ivan Tomic
+2. sa gotovim funkcijama isto urediti
+3. ucitati znakovni niz i proveriti rad 1 i 2 stavke
+4. ucitati niz znakovnih nizova urediti je po 2 stavci, 
+sortirati ih po godini rodjenja od najstarijeg do najmladjeg, 
+godine rodjenja prebaciti u numericki niz i odrediti broj 
+godina razlike izmedju najstarijeg i najmladjeg */
+
+ #ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#include<stdlib.h>
+#include<iostream>
+#include<cstring>
+using namespace std;
+void bez_gotovih(char s[100]);
+void sa_gotovim(char s[100]);
+void upisMat(char mat[100][100], int n);
+void sort(char mat[100][100], int n);
+void ispisMat(char mat[100][100], int n);
+void main()
+{
+	char s[100], mat[100][100], novi[100][100];
+	int n,broj,a[100], max=0, min=0;
+	cout<<"Unesi podatke osobe [(ime) (prezime) , (godina rodjenja)]:\n";
+	gets(s);
+	bez_gotovih(s);
+
+	cout<<"Broj ljudi:";
+	cin>>n;
+	getchar();
+	upisMat(mat,n);
+	cout<<"Uredjivanje:";
+	for(int i=0;i<n;i++)
+	{
+		cout<<"(godina rodjenja), (ime) (prezime):\n";
+		sa_gotovim(mat[i]);
+	}
+	sort(mat, n);
+	cout<<"Sortirani od najstarijeg do najmladjeg!\n";
+	ispisMat(mat, n);
+	
+	for(int i=0;i<n;i++)
+	{
+		strncpy(novi[i],mat[i],4);
+		novi[i][4]='\0';
+		a[i]=atoi(novi[i]);
+		if(a[i]>a[max])
+			max=i;
+		if(a[i]<a[min])
+			min=i;
+	}
+	cout<<"Razlika izmedju godina rodjenja najstarijeg i najmladjeg je:"<<a[max]-a[min]<<endl;
+	system("PAUSE");
+}
+void upisMat(char mat[100][100], int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Unesi podatke osobe [(ime) (prezime) , (godina rodjenja)]:\n";
+		gets(mat[i]);
+	}
+
+}
+void bez_gotovih(char s[100])
+{
+	char tp[80];
+	int i=0,b=0,n;
+	while(s[i]!=',')
+		i++;
+	n=i;
+	i=i+2;
+	for(;s[i]!='\0';i++)
+	{
+		tp[b]=s[i];
+		b++;
+	}
+	s[n-1]='\0';
+	tp[b]=',';
+	tp[b+1]=' ';
+	i=0;
+	for(;s[i]!='\0';i++)
+	{
+		tp[b+i+2]=s[i];
+	}
+	tp[b+i+2]='\0';
+	puts(tp);
+	cout<<endl;
+}
+void sa_gotovim(char s[100])
+{
+	char tpp[100];
+	int pok, n;
+	pok = strrchr(s,' ') - s;
+	strcpy(tpp, s + pok + 1);
+	strncpy(s, s, pok);
+	s[pok] = '\0';
+	n = strlen(tpp);
+	tpp[n] = ',';
+	tpp[n + 1] = ' ';
+	strcpy(tpp + n + 2, s);
+	tpp[n + pok + 1] = '\0';
+	puts(tpp);
+	strcpy(s,tpp);
+	cout<<endl;
+}
+void sort(char mat[100][100], int n)
+{
+	char sp[20];
+	for(int i=0;i<n-1;i++)
+		for(int k=i+1;k<n;k++)
+		{
+			if(strcmp(mat[i],mat[k])>0)
+			{
+				strcpy(sp, mat[i]);
+				strcpy(mat[i],mat[k]);
+				strcpy(mat[k],sp);
+			}
+		}
+}
+void ispisMat(char mat[100][100], int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		puts(mat[i]);
+		cout<<endl;
+	}
+}
