@@ -1,0 +1,36 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#include<stdlib.h>
+#include<iostream>
+#include<cstring>
+using namespace std;
+void main()
+{
+	char s[80], tp[80];
+	int i=0,b=0,n;
+	cout<<"Unesi podatke osobe [(ime) (prezime), (godina rodjenja)]:";
+	gets(s);
+	while(s[i]!=',')
+		i++;
+	n=i;
+	i=i+2;
+	for(;s[i]!='\0';i++)
+	{
+		tp[b]=s[i];
+		b++;
+	}
+	s[n-1]='\0';
+	tp[b]=',';
+	tp[b+1]=' ';
+	i=0;
+	for(;s[i]!='\0';i++)
+	{
+		tp[b+i+2]=s[i];
+	}
+	tp[b+i+2]='\0';
+	puts(tp);
+	cout<<endl;
+
+	system("pause");
+}
